@@ -15,10 +15,11 @@
  * limitations under the License.
  *
  */
-package com.mobiledevpro.peoplelist.view
+package com.mobiledevpro.peoplelist.view.vm
 
 import androidx.lifecycle.viewModelScope
 import com.mobiledevpro.peoplelist.domain.usecase.GetPeopleListUseCase
+import com.mobiledevpro.peoplelist.view.state.PeopleProfileUIState
 import com.mobiledevpro.ui.vm.BaseViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update

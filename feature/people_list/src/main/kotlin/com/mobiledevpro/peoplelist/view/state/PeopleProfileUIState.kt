@@ -15,7 +15,7 @@
  * limitations under the License.
  *
  */
-package com.mobiledevpro.peoplelist.view
+package com.mobiledevpro.peoplelist.view.state
 
 import com.mobiledevpro.domain.model.PeopleProfile
 import com.mobiledevpro.ui.state.UIState

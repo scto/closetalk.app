@@ -22,9 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.mobiledevpro.navigation.Screen
-import com.mobiledevpro.navigation.onBoardingFirstScreen
-import com.mobiledevpro.navigation.onBoardingSecondScreen
-import com.mobiledevpro.navigation.onBoardingThirdScreen
+import com.mobiledevpro.navigation.screen.onBoardingFirstScreen
+import com.mobiledevpro.navigation.screen.onBoardingSecondScreen
+import com.mobiledevpro.navigation.screen.onBoardingThirdScreen
 
 /**
  * Nested navigation graph for OnBoarding screen

@@ -23,9 +23,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.mobiledevpro.navigation.Screen
 import com.mobiledevpro.navigation.ext.navigateTo
-import com.mobiledevpro.navigation.homeNavGraph
-import com.mobiledevpro.navigation.onBoardingNavGraph
-import com.mobiledevpro.navigation.subscriptionScreen
+import com.mobiledevpro.navigation.screen.homeScreen
+import com.mobiledevpro.navigation.screen.onBoardingScreen
+import com.mobiledevpro.navigation.screen.subscriptionScreen
 
 /**
  * Top-level navigation host in the app
@@ -52,8 +52,8 @@ fun RootNavGraph(
         }
 
         //Nested Navigation Graphs
-        onBoardingNavGraph(onNavigateToRoot = navController::navigateTo)
-        homeNavGraph(onNavigateToRoot = navController::navigateTo)
+        onBoardingScreen(onNavigateToRoot = navController::navigateTo)
+        homeScreen(onNavigateToRoot = navController::navigateTo)
 
         //Root screens
         subscriptionScreen(onNavigateBack = navigateBack)

@@ -25,8 +25,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.mobiledevpro.navigation.Screen
 import com.mobiledevpro.navigation.ext.navigateTo
-import com.mobiledevpro.navigation.peopleListScreen
-import com.mobiledevpro.navigation.peopleProfileScreen
+import com.mobiledevpro.navigation.screen.peopleListScreen
+import com.mobiledevpro.navigation.screen.peopleProfileScreen
 
 /**
  *  Nested navigation graph for People screen

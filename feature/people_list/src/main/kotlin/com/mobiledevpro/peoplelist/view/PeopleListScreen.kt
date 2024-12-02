@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mobiledevpro.domain.model.PeopleProfile
 import com.mobiledevpro.peoplelist.view.component.ProfileCard
+import com.mobiledevpro.peoplelist.view.state.PeopleProfileUIState
 import com.mobiledevpro.ui.component.ScreenBackground
 import com.mobiledevpro.ui.ext.dp
 import com.mobiledevpro.ui.ext.statusBarHeight

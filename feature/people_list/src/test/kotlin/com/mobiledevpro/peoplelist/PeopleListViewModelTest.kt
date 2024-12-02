@@ -19,8 +19,8 @@ package com.mobiledevpro.peoplelist
 
 import app.cash.turbine.test
 import com.mobiledevpro.peoplelist.domain.usecase.GetPeopleListUseCase
-import com.mobiledevpro.peoplelist.view.PeopleListViewModel
-import com.mobiledevpro.peoplelist.view.PeopleProfileUIState
+import com.mobiledevpro.peoplelist.view.state.PeopleProfileUIState
+import com.mobiledevpro.peoplelist.view.vm.PeopleListViewModel
 import com.mobiledevpro.ui.state.UIState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

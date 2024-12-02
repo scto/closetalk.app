@@ -22,9 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.mobiledevpro.navigation.Screen
-import com.mobiledevpro.navigation.chatListScreen
-import com.mobiledevpro.navigation.peopleNavGraph
-import com.mobiledevpro.navigation.profileScreen
+import com.mobiledevpro.navigation.screen.chatListScreen
+import com.mobiledevpro.navigation.screen.peopleNavGraph
+import com.mobiledevpro.navigation.screen.userProfileScreen
 
 /**
  * Nested navigation graph for Home screen
@@ -46,7 +46,7 @@ fun HomeNavGraph(
 
         chatListScreen()
         peopleNavGraph()
-        profileScreen(onNavigateTo = onNavigateToRoot)
+        userProfileScreen(onNavigateTo = onNavigateToRoot)
 
     }
 }

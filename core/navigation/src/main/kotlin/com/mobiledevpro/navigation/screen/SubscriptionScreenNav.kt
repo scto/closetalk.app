@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 | Dmitri Chernysh | https://mobile-dev.pro
+ * Copyright 2024 | Dmitri Chernysh | http://mobile-dev.pro
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,25 +15,17 @@
  * limitations under the License.
  *
  */
-package com.mobiledevpro.peoplelist.di
+package com.mobiledevpro.navigation.screen
 
-import com.mobiledevpro.peoplelist.domain.usecase.GetPeopleListUseCase
-import com.mobiledevpro.peoplelist.view.vm.PeopleListViewModel
-import org.koin.core.module.dsl.scopedOf
-import org.koin.core.module.dsl.viewModelOf
-import org.koin.dsl.module
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
+import com.mobiledevpro.navigation.Screen
+import com.mobiledevpro.subscription.SubscriptionScreen
 
-/**
- * User Profile screen module
- *
- * Created on Jul 22, 2023.
- *
- */
-
-val featurePeopleListModule = module {
-
-    scope<PeopleListViewModel> {
-        viewModelOf(::PeopleListViewModel)
-        scopedOf(::GetPeopleListUseCase)
+fun NavGraphBuilder.subscriptionScreen(onNavigateBack: () -> Unit) {
+    composable(
+        route = Screen.Subscription.route
+    ) {
+        SubscriptionScreen(onNavigateBack)
     }
 }
