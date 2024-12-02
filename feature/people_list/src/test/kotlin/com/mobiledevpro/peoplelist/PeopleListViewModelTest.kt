@@ -32,6 +32,7 @@ import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 
 
 class PeopleListViewModelTest {
@@ -53,10 +54,8 @@ class PeopleListViewModelTest {
 
     @Test
     fun stateTest() = runTest {
-
         vm.uiState.test {
-            // assertEquals("State is not Loading", PeopleProfileUIState.Loading, awaitItem())
-
+            assertEquals(PeopleProfileUIState.Loading, awaitItem())
             assertTrue(
                 "People list is empty",
                 (awaitItem() as PeopleProfileUIState.Success).profileList.isNotEmpty()
