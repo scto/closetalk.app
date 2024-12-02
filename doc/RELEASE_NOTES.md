@@ -14,3 +14,9 @@
 The source code is available on https://github.com/mobiledevpro/Jetpack-Compose-ChatApp-Template
 
 ## v0.1.0-build-4
+
+- Improvements
+- The source code is available on
+  GitHub https://github.com/mobiledevpro/Jetpack-Compose-ChatApp-Template
+
+## v0.1.0-build-5
