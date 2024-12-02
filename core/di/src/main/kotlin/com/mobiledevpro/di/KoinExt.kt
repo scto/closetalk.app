@@ -19,7 +19,8 @@ package com.mobiledevpro.di
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisallowComposableCalls
-import androidx.compose.runtime.remember
+import androidx.lifecycle.ViewModel
+import org.koin.androidx.compose.navigation.koinNavViewModel
 import org.koin.compose.module.rememberKoinModules
 import org.koin.compose.scope.rememberKoinScope
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -40,7 +41,7 @@ inline fun <reified T> koinScope(): Scope {
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-inline fun <reified T> rememberViewModel(
+inline fun <reified T : ViewModel> rememberNavViewModel(
     crossinline modules: @DisallowComposableCalls () -> List<Module>
 ): T {
     rememberKoinModules(
@@ -49,5 +50,8 @@ inline fun <reified T> rememberViewModel(
 
     val scope = rememberKoinScope(scope = koinScope<T>())
 
-    return remember { scope.get() }
+    // return remember { scope.get() }
+
+    // It allows to use SavedStateHandle in ViewModel
+    return koinNavViewModel<T>(scope = scope)
 }

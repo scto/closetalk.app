@@ -19,8 +19,8 @@ package com.mobiledevpro.chatlist.di
 
 import com.mobiledevpro.chatlist.domain.usecase.GetChatListUseCase
 import com.mobiledevpro.chatlist.view.ChatListViewModel
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.scopedOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 /**

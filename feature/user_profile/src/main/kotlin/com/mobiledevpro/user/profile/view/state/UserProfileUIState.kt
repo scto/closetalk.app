@@ -28,9 +28,9 @@ import com.mobiledevpro.ui.state.UIState
  */
 sealed interface UserProfileUIState : UIState {
 
-    object Empty : UserProfileUIState
+    data object Empty : UserProfileUIState
 
-    class Success(val userProfile: UserProfile) : UserProfileUIState
+    data class Success(val userProfile: UserProfile) : UserProfileUIState
 
-    class Fail(val throwable: Throwable) : UserProfileUIState
+    data class Fail(val throwable: Throwable) : UserProfileUIState
 }

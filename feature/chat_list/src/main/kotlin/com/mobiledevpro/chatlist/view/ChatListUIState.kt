@@ -32,7 +32,7 @@ sealed interface ChatListUIState : UIState {
 
     data object Loading : ChatListUIState
 
-    class Success(val profileList : List<Chat>) : ChatListUIState
+    data class Success(val chatList: List<Chat>) : ChatListUIState
 
-    class Fail(val throwable: Throwable) : ChatListUIState
+    data class Fail(val throwable: Throwable) : ChatListUIState
 }

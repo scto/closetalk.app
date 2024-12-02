@@ -30,7 +30,7 @@ class GetChatListUseCase(
 
 ) : BaseCoroutinesFLowUseCase<List<Chat>, None>(Dispatchers.IO) {
 
-    override fun buildUseCaseFlow(params: None?): Flow<List<Chat>> =
+    override suspend fun buildUseCaseFlow(params: None?): Flow<List<Chat>> =
         flowOf(fakeChatList)
 
 }

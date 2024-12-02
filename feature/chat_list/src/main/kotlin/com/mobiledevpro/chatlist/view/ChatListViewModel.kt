@@ -21,8 +21,9 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.mobiledevpro.chatlist.domain.usecase.GetChatListUseCase
 import com.mobiledevpro.ui.vm.BaseViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 
 class ChatListViewModel(
@@ -37,14 +38,22 @@ class ChatListViewModel(
     }
 
     private fun observeChatList() {
-        getChatListUseCase.execute()
-            .onEach { result ->
-                result.onSuccess { list ->
-                    ChatListUIState.Success(list)
-                        .also { _uiState.value = it }
-                }.onFailure {
-                    //TODO: show an error
+        viewModelScope.launch {
+            getChatListUseCase.execute()
+                .collectLatest { result ->
+                    result.onSuccess { list ->
+                        _uiState.update {
+                            if (it is ChatListUIState.Success)
+                                it.copy(chatList = list)
+                            else
+                                ChatListUIState.Success(list)
+                        }
+                    }.onFailure { err ->
+                        _uiState.update {
+                            ChatListUIState.Fail(err)
+                        }
+                    }
                 }
-            }.launchIn(viewModelScope)
+        }
     }
 }

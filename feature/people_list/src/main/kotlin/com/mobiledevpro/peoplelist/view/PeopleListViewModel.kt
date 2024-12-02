@@ -20,8 +20,9 @@ package com.mobiledevpro.peoplelist.view
 import androidx.lifecycle.viewModelScope
 import com.mobiledevpro.peoplelist.domain.usecase.GetPeopleListUseCase
 import com.mobiledevpro.ui.vm.BaseViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 
 class PeopleListViewModel(
@@ -30,21 +31,29 @@ class PeopleListViewModel(
 
     override fun initUIState(): PeopleProfileUIState = PeopleProfileUIState.Loading
 
+
     init {
         observePeopleList()
     }
 
     private fun observePeopleList() {
-
-        getPeopleListUseCase.execute()
-            .onEach { result ->
-                result.onSuccess { list ->
-                    PeopleProfileUIState.Success(list)
-                        .also { _uiState.value = it }
-                }.onFailure {
-                    //TODO: show error
+        viewModelScope.launch {
+            getPeopleListUseCase.execute()
+                .collectLatest { result ->
+                    result.onSuccess { list ->
+                        _uiState.update {
+                            if (it is PeopleProfileUIState.Success)
+                                it.copy(list)
+                            else
+                                PeopleProfileUIState.Success(list)
+                        }
+                    }.onFailure { err ->
+                        _uiState.update {
+                            PeopleProfileUIState.Fail(err)
+                        }
+                    }
                 }
-            }.launchIn(viewModelScope)
+        }
     }
 
 }

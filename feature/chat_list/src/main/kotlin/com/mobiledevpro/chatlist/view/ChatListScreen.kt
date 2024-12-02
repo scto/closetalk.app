@@ -66,7 +66,7 @@ fun ChatListScreen(
             is ChatListUIState.Empty -> NoChatFound()
             is ChatListUIState.Success ->
                 ChatList(
-                    chatList = (uiState as ChatListUIState.Success).profileList,
+                    chatList = (uiState as ChatListUIState.Success).chatList,
                     onClick = onClick
                 )
 

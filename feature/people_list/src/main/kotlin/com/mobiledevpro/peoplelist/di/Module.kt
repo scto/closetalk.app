@@ -19,8 +19,8 @@ package com.mobiledevpro.peoplelist.di
 
 import com.mobiledevpro.peoplelist.domain.usecase.GetPeopleListUseCase
 import com.mobiledevpro.peoplelist.view.PeopleListViewModel
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.scopedOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 /**

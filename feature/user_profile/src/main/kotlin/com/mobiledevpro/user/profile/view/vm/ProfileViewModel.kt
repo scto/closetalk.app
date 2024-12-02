@@ -22,8 +22,9 @@ import androidx.lifecycle.viewModelScope
 import com.mobiledevpro.ui.vm.BaseViewModel
 import com.mobiledevpro.user.profile.domain.usecase.GetUserProfileUseCase
 import com.mobiledevpro.user.profile.view.state.UserProfileUIState
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val getUserProfileUseCase: GetUserProfileUseCase
@@ -37,15 +38,23 @@ class ProfileViewModel(
     }
 
     private fun observeUserProfile() {
-        getUserProfileUseCase.execute()
-            .onEach { result ->
-                result.onSuccess { profile ->
-                    UserProfileUIState.Success(profile)
-                        .also { _uiState.value = it }
-                }.onFailure {
-                    //TODO: show the error
-                }
+        viewModelScope.launch {
+            getUserProfileUseCase.execute()
+                .collectLatest { result ->
+                    result.onSuccess { profile ->
+                        _uiState.update {
+                            if (it is UserProfileUIState.Success)
+                                it.copy(userProfile = profile)
+                            else
+                                UserProfileUIState.Success(profile)
+                        }
+                    }.onFailure { err ->
+                        _uiState.update {
+                            UserProfileUIState.Fail(err)
+                        }
+                    }
 
-            }.launchIn(viewModelScope)
+                }
+        }
     }
 }

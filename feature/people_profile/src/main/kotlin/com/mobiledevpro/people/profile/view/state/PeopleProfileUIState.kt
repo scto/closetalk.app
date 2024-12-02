@@ -15,25 +15,17 @@
  * limitations under the License.
  *
  */
-package com.mobiledevpro.user.profile.di
+package com.mobiledevpro.people.profile.view.state
 
-import com.mobiledevpro.user.profile.domain.usecase.GetUserProfileUseCase
-import com.mobiledevpro.user.profile.view.vm.ProfileViewModel
-import org.koin.core.module.dsl.scopedOf
-import org.koin.core.module.dsl.viewModelOf
-import org.koin.dsl.module
+import com.mobiledevpro.domain.model.PeopleProfile
+import com.mobiledevpro.ui.state.UIState
 
-/**
- * User Profile screen module
- *
- * Created on Jul 22, 2023.
- *
- */
 
-val featureUserProfileModule = module {
+sealed interface PeopleProfileUIState : UIState {
 
-    scope<ProfileViewModel> {
-        viewModelOf(::ProfileViewModel)
-        scopedOf(::GetUserProfileUseCase)
-    }
+    data object Empty : PeopleProfileUIState
+
+    data class Success(val profile: PeopleProfile) : PeopleProfileUIState
+
+    data class Fail(val throwable: Throwable) : PeopleProfileUIState
 }

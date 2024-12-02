@@ -15,10 +15,10 @@
  * limitations under the License.
  *
  */
-package com.mobiledevpro.user.profile.di
+package com.mobiledevpro.people.profile.di
 
-import com.mobiledevpro.user.profile.domain.usecase.GetUserProfileUseCase
-import com.mobiledevpro.user.profile.view.vm.ProfileViewModel
+import com.mobiledevpro.people.profile.domain.usecase.GetPeopleProfileUseCase
+import com.mobiledevpro.people.profile.view.vm.PeopleProfileViewModel
 import org.koin.core.module.dsl.scopedOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
@@ -30,10 +30,10 @@ import org.koin.dsl.module
  *
  */
 
-val featureUserProfileModule = module {
+val featurePeopleProfileModule = module {
 
-    scope<ProfileViewModel> {
-        viewModelOf(::ProfileViewModel)
-        scopedOf(::GetUserProfileUseCase)
+    scope<PeopleProfileViewModel> {
+        viewModelOf(::PeopleProfileViewModel)
+        scopedOf(::GetPeopleProfileUseCase)
     }
 }

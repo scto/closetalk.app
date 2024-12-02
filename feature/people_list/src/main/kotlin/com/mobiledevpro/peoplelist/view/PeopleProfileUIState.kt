@@ -28,11 +28,11 @@ import com.mobiledevpro.ui.state.UIState
  */
 sealed interface PeopleProfileUIState : UIState {
 
-    object Empty : PeopleProfileUIState
+    data object Empty : PeopleProfileUIState
 
-    object Loading : PeopleProfileUIState
+    data object Loading : PeopleProfileUIState
 
-    class Success(val profileList : List<PeopleProfile>) : PeopleProfileUIState
+    data class Success(val profileList: List<PeopleProfile>) : PeopleProfileUIState
 
-    class Fail(val throwable: Throwable) : PeopleProfileUIState
+    data class Fail(val throwable: Throwable) : PeopleProfileUIState
 }

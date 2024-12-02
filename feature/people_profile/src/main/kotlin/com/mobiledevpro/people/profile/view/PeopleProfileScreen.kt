@@ -43,8 +43,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,12 +56,15 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mobiledevpro.domain.model.PeopleProfile
 import com.mobiledevpro.people.profile.R
+import com.mobiledevpro.people.profile.view.state.PeopleProfileUIState
 import com.mobiledevpro.ui.component.ProfileContent
 import com.mobiledevpro.ui.component.ProfilePicture
 import com.mobiledevpro.ui.component.ProfilePictureSize
 import com.mobiledevpro.ui.component.ScreenBackground
+import kotlinx.coroutines.flow.StateFlow
 import com.mobiledevpro.ui.R as RApp
 
 /**
@@ -71,14 +77,24 @@ import com.mobiledevpro.ui.R as RApp
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.PeopleProfileScreen(
-    profile: PeopleProfile,
+    state: StateFlow<PeopleProfileUIState>,
     animatedVisibilityScope: AnimatedVisibilityScope,
     onBackPressed: () -> Unit,
     onOpenChatWith: (profile: PeopleProfile) -> Unit,
     onOpenSocialLink: (Uri) -> Unit
 ) {
 
+    val uiState by state.collectAsStateWithLifecycle()
     val backgroundBoxTopOffset = remember { mutableIntStateOf(0) }
+
+    var peopleProfile by remember { mutableStateOf<PeopleProfile?>(null) }
+
+    if (uiState is PeopleProfileUIState.Success) {
+        (uiState as PeopleProfileUIState.Success).also { st ->
+            peopleProfile = st.profile
+
+        }
+    }
 
     ScreenBackground(
         modifier = Modifier
@@ -108,55 +124,57 @@ fun SharedTransitionScope.PeopleProfileScreen(
                 )
             }
 
-            ProfilePicture(
-                photoUri = profile.photo ?: Uri.EMPTY,
-                onlineStatus = profile.status,
-                size = ProfilePictureSize.LARGE,
-                modifier = Modifier
-                    .padding(paddingValues = PaddingValues(16.dp, 16.dp, 16.dp, 16.dp))
-                    .align(Alignment.CenterHorizontally)
-                    .onGloballyPositioned {
-                        val rect = it.boundsInParent()
-                        backgroundBoxTopOffset.value =
-                            rect.topCenter.y.toInt() + (rect.bottomCenter.y - rect.topCenter.y).toInt() / 2
-                    }
-                    .sharedElement(
-                        state = rememberSharedContentState(key = "image-${profile.photo}"),
-                        animatedVisibilityScope = animatedVisibilityScope,
-                    )
-            )
-
-            ProfileContent(
-                userName = profile.name,
-                isOnline = profile.status,
-                alignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
-
-            ProfileSocialIcons(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                profile = profile,
-                onOpenSocialLink = onOpenSocialLink
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .align(Alignment.CenterHorizontally),
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Button(
-                    onClick = {
-                        profile.also(onOpenChatWith)
-                    },
+            peopleProfile?.let { profile ->
+                ProfilePicture(
+                    photoUri = profile.photo ?: Uri.EMPTY,
+                    onlineStatus = profile.status,
+                    size = ProfilePictureSize.LARGE,
                     modifier = Modifier
-                        .padding(bottom = 48.dp, top = 16.dp, start = 16.dp, end = 16.dp)
-                        .defaultMinSize(minHeight = 48.dp, minWidth = 144.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary),
+                        .padding(paddingValues = PaddingValues(16.dp, 16.dp, 16.dp, 16.dp))
+                        .align(Alignment.CenterHorizontally)
+                        .onGloballyPositioned {
+                            val rect = it.boundsInParent()
+                            backgroundBoxTopOffset.value =
+                                rect.topCenter.y.toInt() + (rect.bottomCenter.y - rect.topCenter.y).toInt() / 2
+                        }
+                        .sharedElement(
+                            state = rememberSharedContentState(key = "image-${profile.photo}"),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                        )
+                )
+
+                ProfileContent(
+                    userName = profile.name,
+                    isOnline = profile.status,
+                    alignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+
+                ProfileSocialIcons(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    profile = profile,
+                    onOpenSocialLink = onOpenSocialLink
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .align(Alignment.CenterHorizontally),
+                    verticalAlignment = Alignment.Bottom
                 ) {
-                    Text(text = "Say Hi \uD83D\uDC4B")
+                    Button(
+                        onClick = {
+                            profile.also(onOpenChatWith)
+                        },
+                        modifier = Modifier
+                            .padding(bottom = 48.dp, top = 16.dp, start = 16.dp, end = 16.dp)
+                            .defaultMinSize(minHeight = 48.dp, minWidth = 144.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary),
+                    ) {
+                        Text(text = "Say Hi \uD83D\uDC4B")
+                    }
                 }
             }
         }

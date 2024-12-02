@@ -24,7 +24,6 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
@@ -36,7 +35,7 @@ import androidx.navigation.navArgument
 import com.mobiledevpro.chatlist.di.featureChatListModule
 import com.mobiledevpro.chatlist.view.ChatListScreen
 import com.mobiledevpro.chatlist.view.ChatListViewModel
-import com.mobiledevpro.di.rememberViewModel
+import com.mobiledevpro.di.rememberNavViewModel
 import com.mobiledevpro.home.view.HomeScreen
 import com.mobiledevpro.home.view.HomeViewModel
 import com.mobiledevpro.navigation.ext.navigateTo
@@ -47,9 +46,10 @@ import com.mobiledevpro.onboarding.view.OnBoardingFirstScreen
 import com.mobiledevpro.onboarding.view.OnBoardingScreen
 import com.mobiledevpro.onboarding.view.OnBoardingSecondScreen
 import com.mobiledevpro.onboarding.view.OnBoardingThirdScreen
+import com.mobiledevpro.people.profile.di.featurePeopleProfileModule
 import com.mobiledevpro.people.profile.view.PeopleProfileScreen
-import com.mobiledevpro.people.profile.view.PeopleProfileViewModel
 import com.mobiledevpro.people.profile.view.args.PeopleProfileArgs
+import com.mobiledevpro.people.profile.view.vm.PeopleProfileViewModel
 import com.mobiledevpro.people.view.PeopleScreen
 import com.mobiledevpro.peoplelist.di.featurePeopleListModule
 import com.mobiledevpro.peoplelist.view.PeopleListScreen
@@ -58,6 +58,7 @@ import com.mobiledevpro.subscription.SubscriptionScreen
 import com.mobiledevpro.user.profile.di.featureUserProfileModule
 import com.mobiledevpro.user.profile.view.ProfileScreen
 import com.mobiledevpro.user.profile.view.vm.ProfileViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
 
 fun NavGraphBuilder.homeNavGraph(onNavigateToRoot: (Screen) -> Unit) {
@@ -185,7 +186,7 @@ fun NavGraphBuilder.chatListScreen() {
         route = Screen.ChatList.route
     ) {
 
-        val viewModel = rememberViewModel<ChatListViewModel>(
+        val viewModel = rememberNavViewModel<ChatListViewModel>(
             modules = { listOf(featureChatListModule) }
         )
 
@@ -207,7 +208,7 @@ fun NavGraphBuilder.peopleListScreen(
         route = Screen.PeopleList.route
     ) {
 
-        val viewModel = rememberViewModel<PeopleListViewModel>(
+        val viewModel = rememberNavViewModel<PeopleListViewModel>(
             modules = { listOf(featurePeopleListModule) }
         )
 
@@ -222,7 +223,7 @@ fun NavGraphBuilder.peopleListScreen(
     }
 }
 
-@OptIn(ExperimentalSharedTransitionApi::class)
+@OptIn(ExperimentalSharedTransitionApi::class, KoinExperimentalAPI::class)
 fun NavGraphBuilder.peopleProfileScreen(
     transitionScope: SharedTransitionScope,
     onNavigateBack: () -> Unit,
@@ -235,10 +236,9 @@ fun NavGraphBuilder.peopleProfileScreen(
         )
     ) {
 
-        val viewModel: PeopleProfileViewModel = viewModel()
-        val peopleProfile = remember { viewModel.getProfile() }
-
-        peopleProfile ?: return@composable
+        val viewModel = rememberNavViewModel<PeopleProfileViewModel>(
+            modules = { listOf(featurePeopleProfileModule) }
+        )
 
         val context = LocalContext.current
 
@@ -251,7 +251,7 @@ fun NavGraphBuilder.peopleProfileScreen(
         }
 
         transitionScope.PeopleProfileScreen(
-            peopleProfile,
+            viewModel.uiState,
             animatedVisibilityScope = this,
             onBackPressed = onNavigateBack,
             onOpenChatWith = {},
@@ -266,7 +266,7 @@ fun NavGraphBuilder.profileScreen(onNavigateTo: (Screen) -> Unit) {
         route = Screen.Profile.route
     ) {
 
-        val viewModel = rememberViewModel<ProfileViewModel>(
+        val viewModel = rememberNavViewModel<ProfileViewModel>(
             modules = {
                 listOf(featureUserProfileModule)
             }

@@ -10,6 +10,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mobiledevpro.app.ui.MainApp
 import com.mobiledevpro.ui.theme.AppTheme
 import com.mobiledevpro.ui.theme.darkModeState
+import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
 
@@ -24,7 +25,9 @@ class MainActivity : ComponentActivity() {
             val darkModeState by darkModeState.collectAsStateWithLifecycle()
 
             AppTheme(darkTheme = darkModeState) {
-                MainApp()
+                KoinContext {
+                    MainApp()
+                }
             }
         }
     }

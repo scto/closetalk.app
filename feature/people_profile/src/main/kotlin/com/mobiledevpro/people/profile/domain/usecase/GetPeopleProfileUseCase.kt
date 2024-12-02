@@ -15,21 +15,22 @@
  * limitations under the License.
  *
  */
-package com.mobiledevpro.user.profile.domain.usecase
+package com.mobiledevpro.people.profile.domain.usecase
 
 import com.mobiledevpro.coroutines.BaseCoroutinesFLowUseCase
-import com.mobiledevpro.coroutines.None
-import com.mobiledevpro.domain.model.UserProfile
-import com.mobiledevpro.domain.model.fakeUser
+import com.mobiledevpro.domain.model.PeopleProfile
+import com.mobiledevpro.domain.model.fakePeopleProfileList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 
-class GetUserProfileUseCase(
+class GetPeopleProfileUseCase(
 
-) : BaseCoroutinesFLowUseCase<UserProfile, None>(Dispatchers.IO) {
+) : BaseCoroutinesFLowUseCase<PeopleProfile?, Int>(Dispatchers.IO) {
 
-    override suspend fun buildUseCaseFlow(params: None?): Flow<UserProfile> =
-        flowOf(fakeUser)
+    override suspend fun buildUseCaseFlow(params: Int?): Flow<PeopleProfile?> =
+        params?.let { peopleProfileId ->
+            flowOf(fakePeopleProfileList.find { it.id == peopleProfileId })
+        } ?: throw Throwable("People profile cannot be null")
 }
