@@ -20,3 +20,7 @@ The source code is available on https://github.com/mobiledevpro/Jetpack-Compose-
   GitHub https://github.com/mobiledevpro/Jetpack-Compose-ChatApp-Template
 
 ## v0.1.0-build-5
+
+- Dark/Light mode is now saved and applied on the next app start.
+
+## v0.1.0-build-6
