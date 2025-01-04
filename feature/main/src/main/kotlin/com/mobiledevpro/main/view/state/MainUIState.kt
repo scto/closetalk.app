@@ -15,24 +15,16 @@
  * limitations under the License.
  *
  */
-package com.mobiledevpro.user.profile.view.state
+package com.mobiledevpro.main.view.state
 
-import com.mobiledevpro.domain.model.UserProfile
 import com.mobiledevpro.settings.core.model.Settings
 import com.mobiledevpro.ui.state.UIState
 
-/**
- * UI state for [com.mobiledevpro.user.profile.view.ProfileScreen]
- *
- * Created on May 09, 2023.
- *
- */
-sealed interface UserProfileUIState : UIState {
 
-    data object Empty : UserProfileUIState
+sealed interface MainUIState : UIState {
+    data object Empty : MainUIState
 
-    data class Success(val userProfile: UserProfile? = null, val settings: Settings? = null) :
-        UserProfileUIState
-
-    data class Fail(val throwable: Throwable) : UserProfileUIState
+    data class Success(
+        val settings: Settings
+    ) : MainUIState
 }

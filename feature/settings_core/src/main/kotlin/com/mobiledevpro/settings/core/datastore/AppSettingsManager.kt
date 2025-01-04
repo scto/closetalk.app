@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 | Dmitri Chernysh | https://mobile-dev.pro
+ * Copyright 2025 | Dmitri Chernysh | https://github.com/dmitriy-chernysh
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,21 +15,13 @@
  * limitations under the License.
  *
  */
-package com.mobiledevpro.user.profile.domain.usecase
+package com.mobiledevpro.settings.core.datastore
 
-import com.mobiledevpro.coroutines.BaseCoroutinesFLowUseCase
-import com.mobiledevpro.coroutines.None
-import com.mobiledevpro.domain.model.UserProfile
-import com.mobiledevpro.domain.model.fakeUser
-import kotlinx.coroutines.Dispatchers
+import com.mobiledevpro.settings.AppSettings
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
+interface AppSettingsManager {
+    fun get(): Flow<AppSettings>
 
-class GetUserProfileUseCase(
-
-) : BaseCoroutinesFLowUseCase<None, UserProfile>(Dispatchers.IO) {
-
-    override suspend fun buildUseCaseFlow(params: None?): Flow<UserProfile> =
-        flowOf(fakeUser)
+    suspend fun setDarkMode(isDarkMode: Boolean)
 }

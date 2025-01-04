@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.feature.settingsCore)
+    api(projects.feature.settingsCore)
 }

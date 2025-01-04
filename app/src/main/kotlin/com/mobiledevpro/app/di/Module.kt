@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 | Dmitri Chernysh | https://mobile-dev.pro
+ * Copyright 2025 | Dmitri Chernysh | https://github.com/dmitriy-chernysh
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,29 +15,26 @@
  * limitations under the License.
  *
  */
-package com.mobiledevpro.user.profile.di
+package com.mobiledevpro.app.di
 
+import com.mobiledevpro.app.MainActivity
+import com.mobiledevpro.main.view.vm.MainViewModel
+import com.mobiledevpro.settings.core.datastore.AppSettingsManager
+import com.mobiledevpro.settings.core.datastore.ImplAppSettingsManager
 import com.mobiledevpro.settings.core.usecase.GetAppSettingsUseCase
-import com.mobiledevpro.settings.core.usecase.UpdateAppSettingsUseCase
-import com.mobiledevpro.user.profile.domain.usecase.GetUserProfileUseCase
-import com.mobiledevpro.user.profile.view.vm.ProfileViewModel
+import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.scopedOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-/**
- * User Profile screen module
- *
- * Created on Jul 22, 2023.
- *
- */
+val coreModule = module {
+    singleOf(::ImplAppSettingsManager) { bind<AppSettingsManager>() }
+}
 
-val featureUserProfileModule = module {
-
-    scope<ProfileViewModel> {
-        viewModelOf(::ProfileViewModel)
-        scopedOf(::GetUserProfileUseCase)
+val mainModule = module {
+    scope<MainActivity> {
+        viewModelOf(::MainViewModel)
         scopedOf(::GetAppSettingsUseCase)
-        scopedOf(::UpdateAppSettingsUseCase)
     }
 }
