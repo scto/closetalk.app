@@ -24,7 +24,7 @@
 
 ##
 ### Apps built from this template: 
-- [Screenshot Editor - NeonFrame](https://NeonFrame.app) - Make eye-catching screenshots you share on Twitter, Instagram, and others.
+- [Screenshot Maker - NeonFrame](https://NeonFrame.app) - Make eye-catching screenshots you share on Twitter, Instagram, and others.
  
 ##
 ### Tech. stack
