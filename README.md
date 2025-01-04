@@ -1,4 +1,4 @@
-# Android Chat App entirely built with Jetpack Compose
+# Android Chat App entirely built with Jetpack Compose (in development)
 
 ![Run Unit Tests](https://github.com/mobiledevpro/closetalk.app/actions/workflows/tests.yml/badge.svg)
 [![CodeFactor](https://www.codefactor.io/repository/github/mobiledevpro/closetalk.app/badge)](https://www.codefactor.io/repository/github/mobiledevpro/closetalk.app)
@@ -23,7 +23,7 @@
 [![Youtube](https://img.shields.io/badge/-youtube-red?logo=youtube&message=Youtube&style=for-the-badge&label=Watch+on)](https://www.youtube.com/playlist?list=PL9IBbMupfHWrW419OtGlzc7cBEMNqyLa4)
 
 ##
-### Other apps: 
+### Apps built from this template: 
 - [Screenshot Editor - NeonFrame](https://NeonFrame.app) - Make eye-catching screenshots you share on Twitter, Instagram, and others.
  
 ##
