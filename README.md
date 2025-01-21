@@ -37,7 +37,7 @@
 * [Koin](https://insert-koin.io/docs/reference/koin-android/compose) for dependency injection
 * [Coil](https://coil-kt.github.io/coil/compose/) for image loading
 * MVI + modularization with a clean architecture
-* GitHub Actions [Complete Guide](https://mobiledevpro.gumroad.com/l/zjbvsd)
+* GitHub Actions [Complete Guide](https://www.patreon.com/mobiledevpro/shop/power-of-github-actions-complete-guide-943321)
 
 ##
 ## UI testing with [Maestro](https://maestro.mobile.dev/):
