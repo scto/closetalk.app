@@ -70,9 +70,60 @@ subprojects {
 * [Sample config](maestro/people-profile-flow.yaml)
 
 ##
-## Modularization
+## Module Graph
 
-![modularization](doc/modularization.png)
+```mermaid
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {"primaryTextColor":"#fff","primaryColor":"#5a4f7c","primaryBorderColor":"#5a4f7c","lineColor":"#f5a623","tertiaryColor":"#40375c","fontSize":"12px"}
+  }
+}%%
+
+graph LR
+  subgraph :core
+    :core:navigation["navigation"]
+    :core:ui["ui"]
+    :core:di["di"]
+    :core:domain["domain"]
+    :core:coroutines["coroutines"]
+    :core:util["util"]
+    :core:analytics["analytics"]
+  end
+  subgraph :feature
+    :feature:home["home"]
+    :feature:onboarding["onboarding"]
+    :feature:subscription["subscription"]
+    :feature:chat_list["chat_list"]
+    :feature:people["people"]
+    :feature:user_profile["user_profile"]
+  end
+  :core:navigation --> :core:ui
+  :core:navigation --> :core:di
+  :core:navigation --> :core:domain
+  :core:navigation --> :feature:home
+  :core:navigation --> :feature:onboarding
+  :core:navigation --> :feature:subscription
+  :core:navigation --> :feature:chat_list
+  :core:navigation --> :feature:people
+  :core:navigation --> :feature:user_profile
+  :app --> :core:navigation
+  :feature:home --> :core:ui
+  :feature:home --> :core:di
+  :feature:home --> :core:domain
+  :feature:home --> :core:coroutines
+  :feature:home --> :core:util
+  :feature:home --> :core:analytics
+
+classDef focus fill:#FA8140,stroke:#fff,stroke-width:2px,color:#fff;
+class :core:navigation focus
+class :feature:home focus
+```
+### How to create the module graph
+
+```kotlin
+ ./gradlew createModuleGraph
+```
 
 ##
 ## Author:
