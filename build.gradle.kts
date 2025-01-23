@@ -10,3 +10,22 @@ plugins {
 tasks.register("clean", Delete::class){
     delete(layout.buildDirectory.get())
 }
+
+// To generate the Compose compiler metrics. Files generated in the /build/compose_metrics directory
+// Article https://proandroiddev.com/optimize-app-performance-by-mastering-stability-in-jetpack-compose-69f40a8c785d
+
+// Interpreting Compose Compiler Metrics https://github.com/JetBrains/kotlin/blob/master/plugins/compose/design/compiler-metrics.md
+subprojects {
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
+        kotlinOptions.freeCompilerArgs += listOf(
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+                    project.buildDir.absolutePath + "/compose_metrics"
+        )
+        kotlinOptions.freeCompilerArgs += listOf(
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+                    project.buildDir.absolutePath + "/compose_metrics"
+        )
+    }
+}
