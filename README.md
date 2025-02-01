@@ -134,14 +134,16 @@ class :feature:home focus
 
 **Dmitri Chernysh**
 
-[![Youtube](https://img.shields.io/badge/-youtube-red?logo=youtube&message=Youtube&style=for-the-badge)](https://www.youtube.com/@mobiledevpro?sub_confirmation=1)
-[![Instagram](https://img.shields.io/badge/-instagram-E4405F?logo=instagram&message=Behind+the+scenes+in+Storiesn&style=for-the-badge&logoColor=white&label=insights+on)](https://www.instagram.com/mobiledevpro/)
-[![Linkedin](https://img.shields.io/badge/-linkedin-0A66C2?logo=linkedin&style=for-the-badge&logoColor=white&label=read+on)](https://www.linkedin.com/in/dmitriychernysh/)
-[![Upwork](https://img.shields.io/badge/-upwork-14a800?logo=Upwork&logoColor=white&label=Work+with+me&style=for-the-badge)](https://www.upwork.com/freelancers/dmitrich)
+[![Instagram](https://img.shields.io/badge/-instagram-E4405F?logo=instagram&message=Tech+insights+on&label=Tech+insights+on&logoColor=white&style=for-the-badge)](https://www.instagram.com/mobiledevpro/)
+[![Youtube](https://img.shields.io/badge/-youtube-red?logo=youtube&message=Youtube&label=Watch+on&style=for-the-badge)](https://www.youtube.com/@mobiledevpro?sub_confirmation=1&utm_source=github_main_profile)
+[![Patreon](https://img.shields.io/badge/-patreon-f2a09b?logo=patreon&logoColor=white&label=Join+on&style=for-the-badge)](https://patreon.com/mobiledevpro)
+[![Linkedin](https://img.shields.io/badge/-linkedin-0A66C2?logo=linkedin&logoColor=white&label=Follow+on&style=for-the-badge)](https://www.linkedin.com/in/dmitriychernysh/)
+[![Upwork](https://img.shields.io/badge/-upwork-14a800?logo=Upwork&logoColor=white&label=Work+with+me+on&style=for-the-badge)](https://www.upwork.com/freelancers/dmitrich)
+
 
 ## License:
 
-Copyright 2023 Dmitri Chernysh
+Copyright 2025 Dmitri Chernysh
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
