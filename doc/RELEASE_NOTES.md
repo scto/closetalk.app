@@ -24,3 +24,7 @@ The source code is available on https://github.com/mobiledevpro/Jetpack-Compose-
 - Dark/Light mode is now saved and applied on the next app start.
 
 ## v0.1.0-build-6
+
+- UI improvements
+
+## v0.1.0-build-7

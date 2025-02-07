@@ -17,5 +17,7 @@
  */
 package com.mobiledevpro.ui.state
 
+import androidx.compose.runtime.Stable
 
+@Stable
 interface UIState
