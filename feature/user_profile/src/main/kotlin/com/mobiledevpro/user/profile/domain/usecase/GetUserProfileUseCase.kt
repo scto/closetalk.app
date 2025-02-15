@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 | Dmitri Chernysh | https://mobile-dev.pro
+ * Copyright 2025 | Dmitri Chernysh | https://github.com/dmitriy-chernysh
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,9 +26,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 
-class GetUserProfileUseCase(
-
-) : BaseCoroutinesFLowUseCase<None, UserProfile>(Dispatchers.IO) {
+class GetUserProfileUseCase : BaseCoroutinesFLowUseCase<None, UserProfile>(Dispatchers.IO) {
 
     override suspend fun buildUseCaseFlow(params: None?): Flow<UserProfile> =
         flowOf(fakeUser)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 | Dmitri Chernysh | https://mobile-dev.pro
+ * Copyright 2025 | Dmitri Chernysh | https://github.com/dmitriy-chernysh
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,7 +23,6 @@ import com.mobiledevpro.settings.core.usecase.GetAppSettingsUseCase
 import com.mobiledevpro.ui.vm.BaseViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.onSuccess
 
 
 class MainViewModel(

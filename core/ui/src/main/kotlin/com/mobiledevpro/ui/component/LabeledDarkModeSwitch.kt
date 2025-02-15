@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 | Dmitri Chernysh | https://mobile-dev.pro
+ * Copyright 2025 | Dmitri Chernysh | https://github.com/dmitriy-chernysh
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,9 +51,9 @@ fun LabeledDarkModeSwitch(
         modifier = Modifier
             .fillMaxWidth()
             .padding(
-            horizontal = 16.dp,
-            vertical = 10.dp
-        )
+                horizontal = 16.dp,
+                vertical = 10.dp
+            )
     ) {
 
         Text(text = label, style = MaterialTheme.typography.bodyLarge)

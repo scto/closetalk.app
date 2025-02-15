@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 | Dmitri Chernysh | https://mobile-dev.pro
+ * Copyright 2025 | Dmitri Chernysh | https://github.com/dmitriy-chernysh
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,4 @@
 package com.mobiledevpro.analytics
 
 
-object AnalyticsEvent {
-
-}
+object AnalyticsEvent
