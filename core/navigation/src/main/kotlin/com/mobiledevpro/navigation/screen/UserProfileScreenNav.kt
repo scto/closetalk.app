@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 | Dmitri Chernysh | http://mobile-dev.pro
+ * Copyright 2025 | Dmitri Chernysh | https://github.com/dmitriy-chernysh
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,10 +17,14 @@
  */
 package com.mobiledevpro.navigation.screen
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.mobiledevpro.di.rememberNavViewModel
 import com.mobiledevpro.navigation.Screen
+import com.mobiledevpro.ui.compositionlocal.LocalAnalytics
+import com.mobiledevpro.ui.ext.findActivity
 import com.mobiledevpro.user.profile.di.featureUserProfileModule
 import com.mobiledevpro.user.profile.view.ProfileScreen
 import com.mobiledevpro.user.profile.view.vm.ProfileViewModel
@@ -29,6 +33,16 @@ fun NavGraphBuilder.userProfileScreen(onNavigateTo: (Screen) -> Unit) {
     composable(
         route = Screen.Profile.route
     ) {
+
+        val context = LocalContext.current
+        val analytics = LocalAnalytics.current
+
+        LaunchedEffect(Unit) {
+            analytics.trackScreen(
+                "ProfileScreen",
+                context.findActivity()
+            )
+        }
 
         val viewModel = rememberNavViewModel<ProfileViewModel>(
             modules = {

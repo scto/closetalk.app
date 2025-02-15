@@ -17,6 +17,8 @@
  */
 package com.mobiledevpro.navigation.screen
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.mobiledevpro.chatlist.di.featureChatListModule
@@ -24,11 +26,22 @@ import com.mobiledevpro.chatlist.view.ChatListScreen
 import com.mobiledevpro.chatlist.view.ChatListViewModel
 import com.mobiledevpro.di.rememberNavViewModel
 import com.mobiledevpro.navigation.Screen
+import com.mobiledevpro.ui.compositionlocal.LocalAnalytics
+import com.mobiledevpro.ui.ext.findActivity
 
 fun NavGraphBuilder.chatListScreen() {
     composable(
         route = Screen.ChatList.route
     ) {
+        val context = LocalContext.current
+        val analytics = LocalAnalytics.current
+
+        LaunchedEffect(Unit) {
+            analytics.trackScreen(
+                "ChatListScreen",
+                context.findActivity()
+            )
+        }
 
         val viewModel = rememberNavViewModel<ChatListViewModel>(
             modules = { listOf(featureChatListModule) }

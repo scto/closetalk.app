@@ -6,4 +6,5 @@ dependencies {
     api(libs.coil)
     api(libs.lottie)
     api(libs.splash.screen)
+    api(projects.core.analytics)
 }

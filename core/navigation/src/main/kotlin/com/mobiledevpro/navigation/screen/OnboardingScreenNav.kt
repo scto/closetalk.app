@@ -18,6 +18,8 @@
 package com.mobiledevpro.navigation.screen
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -28,12 +30,13 @@ import com.mobiledevpro.onboarding.view.OnBoardingFirstScreen
 import com.mobiledevpro.onboarding.view.OnBoardingScreen
 import com.mobiledevpro.onboarding.view.OnBoardingSecondScreen
 import com.mobiledevpro.onboarding.view.OnBoardingThirdScreen
+import com.mobiledevpro.ui.compositionlocal.LocalAnalytics
+import com.mobiledevpro.ui.ext.findActivity
 
 fun NavGraphBuilder.onBoardingScreen(onNavigateToRoot: (Screen) -> Unit) {
     composable(
         route = Screen.OnBoarding.route
     ) {
-
         val navController = rememberNavController()
 
         val nestedNavGraph: @Composable () -> Unit = {
@@ -62,6 +65,16 @@ fun NavGraphBuilder.onBoardingFirstScreen() {
     composable(
         route = Screen.OnBoardingFirst.route
     ) {
+        val context = LocalContext.current
+        val analytics = LocalAnalytics.current
+
+        LaunchedEffect(Unit) {
+            analytics.trackScreen(
+                "OnBoardingFirstScreen",
+                context.findActivity()
+            )
+        }
+
         OnBoardingFirstScreen()
     }
 }
@@ -70,6 +83,16 @@ fun NavGraphBuilder.onBoardingSecondScreen() {
     composable(
         route = Screen.OnBoardingSecond.route
     ) {
+        val context = LocalContext.current
+        val analytics = LocalAnalytics.current
+
+        LaunchedEffect(Unit) {
+            analytics.trackScreen(
+                "OnBoardingSecondScreen",
+                context.findActivity()
+            )
+        }
+
         OnBoardingSecondScreen()
     }
 }
@@ -78,6 +101,17 @@ fun NavGraphBuilder.onBoardingThirdScreen() {
     composable(
         route = Screen.OnBoardingThird.route
     ) {
+
+        val context = LocalContext.current
+        val analytics = LocalAnalytics.current
+
+        LaunchedEffect(Unit) {
+            analytics.trackScreen(
+                "OnBoardingThirdScreen",
+                context.findActivity()
+            )
+        }
+
         OnBoardingThirdScreen()
     }
 }

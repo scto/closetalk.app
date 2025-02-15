@@ -18,17 +18,31 @@
 package com.mobiledevpro.navigation.screen
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mobiledevpro.navigation.Screen
 import com.mobiledevpro.navigation.graph.PeopleNavGraph
 import com.mobiledevpro.people.view.PeopleScreen
+import com.mobiledevpro.ui.compositionlocal.LocalAnalytics
+import com.mobiledevpro.ui.ext.findActivity
 
 fun NavGraphBuilder.peopleNavGraph() {
     composable(
         route = Screen.People.route
     ) {
+        val context = LocalContext.current
+        val analytics = LocalAnalytics.current
+
+        LaunchedEffect(Unit) {
+            analytics.trackScreen(
+                "PeopleScreen",
+                context.findActivity()
+            )
+        }
+
         val navController = rememberNavController()
 
         val nestedNavGraph: @Composable () -> Unit = {
