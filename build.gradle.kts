@@ -23,15 +23,15 @@ tasks.register("clean", Delete::class){
 // Interpreting Compose Compiler Metrics https://github.com/JetBrains/kotlin/blob/master/plugins/compose/design/compiler-metrics.md
 subprojects {
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
-        kotlinOptions.freeCompilerArgs += listOf(
+        compilerOptions.freeCompilerArgs.addAll(
             "-P",
             "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-                    project.buildDir.absolutePath + "/compose_metrics"
+                    project.layout.buildDirectory.get().asFile.absolutePath + "/compose_metrics"
         )
-        kotlinOptions.freeCompilerArgs += listOf(
+        compilerOptions.freeCompilerArgs.addAll(
             "-P",
             "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-                    project.buildDir.absolutePath + "/compose_metrics"
+                    project.layout.buildDirectory.get().asFile.absolutePath + "/compose_metrics"
         )
     }
 }
