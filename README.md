@@ -41,7 +41,7 @@
 
 ## Notes
 
-Plugin to generate Compose Compiler metrics (root/build.gradle.kts)
+#### Plugin to generate Compose Compiler metrics (root/build.gradle.kts)
 [Interpreting Compose Compiler Metrics](https://github.com/JetBrains/kotlin/blob/master/plugins/compose/design/compiler-metrics.md)
 
 ```kotlin
@@ -60,6 +60,14 @@ subprojects {
     }
 }
 ```
+
+#### To debug Firebase Analytics events call it in the terminal
+```bash
+adb shell setprop log.tag.FA VERBOSE
+adb shell setprop log.tag.FA-SVC VERBOSE
+adb logcat -v time -s FA FA-SVC
+```
+
 
 ##
 ## UI testing with [Maestro](https://maestro.mobile.dev/):
