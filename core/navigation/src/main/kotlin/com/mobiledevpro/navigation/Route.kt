@@ -43,6 +43,7 @@ const val navigationRouteSubscription = "subscription"
 sealed class Screen(
     val route: String,
     var routePath: String? = null,
+    var popUpToScreen: Screen? = null,
     var clearBackStack: Boolean = false,
     val restoreState: Boolean = true,
     val title: String? = null,
@@ -53,6 +54,10 @@ sealed class Screen(
 
     fun routeWith(path: String) = apply {
         routePath = path
+    }
+
+    fun popUpTo(screen: Screen) = apply {
+        popUpToScreen = screen
     }
 
     object OnBoarding : Screen(navigationRouteOnBoarding)

@@ -19,7 +19,6 @@ package com.mobiledevpro.navigation.ext
 
 import android.util.Log
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.mobiledevpro.navigation.Screen
 
 
@@ -37,13 +36,14 @@ fun NavController.navigateTo(
 
     navigate(route) {
 
-        Log.d("navigation", "findStartDestination: ${graph.findStartDestination()}")
-
-        // Pop up to the start destination of the graph to
+        // Pop up to the certain destination of the graph to
         // avoid building up a large stack of destinations
         // on the back stack as users select items
-        popUpTo(graph.findStartDestination().id) {
-            saveState = true
+        screen.popUpToScreen?.let { screen ->
+            Log.d("navigation", "pop up to: ${screen.route}")
+            popUpTo(screen.route) {
+                saveState = true
+            }
         }
         // Avoid multiple copies of the same destination when
         // reselecting the same item

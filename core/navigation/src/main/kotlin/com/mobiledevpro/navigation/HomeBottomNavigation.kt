@@ -54,11 +54,11 @@ fun HomeBottomNavigation(
                 Log.d("navigation", "HomeBottomNavigation: hierarchy = $currentDestination")
 
                 val selected: Boolean =
-                    currentDestination?.hierarchy?.any { it.route == screen.route } ?: false
+                    currentDestination?.hierarchy?.any { it.route == screen.route } == true
 
                 AppBottomBarItem(
                     selected = selected,
-                    onClick = { onNavigateTo(screen) },
+                    onClick = { onNavigateTo(screen.popUpTo(Screen.ChatList)) },
                     icon = {
                         Icon(
                             imageVector = screen.icon ?: Icons.Default.Warning,
