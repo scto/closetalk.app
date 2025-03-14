@@ -28,3 +28,9 @@ The source code is available on https://github.com/mobiledevpro/Jetpack-Compose-
 - UI improvements
 
 ## v0.1.0-build-7
+
+- UI improvements and dependencies upgrade
+- The source code is available on
+  GitHub https://github.com/mobiledevpro/closetalk.app
+
+## v0.1.0-build-8
