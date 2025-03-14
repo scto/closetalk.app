@@ -17,10 +17,10 @@
  */
 package com.mobiledevpro.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -42,7 +42,8 @@ import com.mobiledevpro.ui.theme.AppTheme
 fun LabeledDarkModeSwitch(
     label: String,
     checked: Boolean,
-    onCheckedChanged: (Boolean) -> Unit
+    onCheckedChanged: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     Row(
@@ -50,10 +51,10 @@ fun LabeledDarkModeSwitch(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(
-                horizontal = 16.dp,
-                vertical = 10.dp
-            )
+            .clickable {
+                onCheckedChanged(!checked)
+            }
+            .then(modifier)
     ) {
 
         Text(text = label, style = MaterialTheme.typography.bodyLarge)

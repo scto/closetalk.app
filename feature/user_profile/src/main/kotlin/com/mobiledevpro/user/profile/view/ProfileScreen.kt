@@ -32,8 +32,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ExitToApp
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.automirrored.rounded.ExitToApp
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
@@ -109,16 +108,17 @@ fun ProfileScreen(
 
         Box(modifier = Modifier.fillMaxSize()) {
 
-            BeLikeAProButton(modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(8.dp)
-                .size(56.dp)
-                .clickable { onNavigateToSubscription() })
+            BeLikeAProButton(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(8.dp)
+                    .size(56.dp)
+                    .clickable { onNavigateToSubscription() })
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(start = 16.dp, end = 16.dp, bottom = 32.dp),
+                    .padding(bottom = 32.dp),
                 verticalArrangement = Arrangement.Top
             ) {
 
@@ -154,19 +154,24 @@ fun ProfileScreen(
                 ) {
 
                     LabeledDarkModeSwitch(
+                        modifier = Modifier.padding(
+                            horizontal = 32.dp,
+                            vertical = 8.dp
+                        ),
                         label = "Dark mode",
                         checked = darkModeOn,
                         onCheckedChanged = { isDark ->
-                            Log.d("main", "ProfileScreen: dark $isDark")
                             darkModeOn = isDark
                             onDarkModeSwitched(isDark)
                         })
 
-                    Divider()
-
                     SettingsButton(
+                        modifier = Modifier.padding(
+                            horizontal = 32.dp,
+                            vertical = 8.dp
+                        ),
                         label = "Log Out",
-                        icon = Icons.Rounded.ExitToApp,
+                        icon = Icons.AutoMirrored.Rounded.ExitToApp,
                         onClick = {
 
                         }
@@ -193,7 +198,7 @@ fun BeLikeAProButton(modifier: Modifier) {
 fun ProfileScreenPreview() {
     AppTheme(darkTheme = true) {
         ProfileScreen(
-            state =  MutableStateFlow(UserProfileUIState.Success(fakeUser)),
+            state = MutableStateFlow(UserProfileUIState.Success(fakeUser)),
             onDarkModeSwitched = {},
             onNavigateToSubscription = {}
         )
