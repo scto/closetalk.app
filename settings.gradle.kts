@@ -1,9 +1,10 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
-        gradlePluginPortal()
+        // Putting less popular or slower repositories (like the Gradle Plugin Portal) at the end can speed up dependency resolution.
         google()
         mavenCentral()
+        gradlePluginPortal()
     }
 }
 

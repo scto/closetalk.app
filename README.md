@@ -68,6 +68,16 @@ adb shell setprop log.tag.FA-SVC VERBOSE
 adb logcat -v time -s FA FA-SVC
 ```
 
+#### Speed up Gradle build time
+
+Article - [How to speed up Gradle build time](https://www.patreon.com/posts/how-to-speed-943321)
+Doc - [Optimize your buid speed](https://developer.android.com/build/optimize-your-build)
+
+#### Get Gradle build report
+
+```bash
+./gradlew --profile
+```
 
 ##
 ## UI testing with [Maestro](https://maestro.mobile.dev/):
