@@ -25,7 +25,8 @@
 ##
 ### Apps built from this template: 
 - [Screenshot Maker - NeonFrame](https://play.google.com/store/apps/details?id=com.mobiledevpro.neonframe.app) - Make eye-catching screenshots you share on Twitter, Instagram, and others.
- 
+- [Habit Tracker](https://www.instagram.com/stories/highlights/18330975238092077/) - Coming...
+
 ##
 ### Tech. stack
 
@@ -39,7 +40,7 @@
 * MVI + modularization with a clean architecture
 * GitHub Actions [Complete Guide](https://www.patreon.com/mobiledevpro/shop/power-of-github-actions-complete-guide-943321)
 
-## Notes
+### Notes
 
 #### Plugin to generate Compose Compiler metrics (root/build.gradle.kts)
 [Interpreting Compose Compiler Metrics](https://github.com/JetBrains/kotlin/blob/master/plugins/compose/design/compiler-metrics.md)
@@ -70,7 +71,8 @@ adb logcat -v time -s FA FA-SVC
 
 #### Speed up Gradle build time
 
-Article - [How to speed up Gradle build time](https://www.patreon.com/posts/how-to-speed-943321)
+Article - [How to speed up Gradle build time](https://medium.com/@nikachapidze01/speed-up-android-builds-60714fc38178)
+
 Doc - [Optimize your buid speed](https://developer.android.com/build/optimize-your-build)
 
 #### Get Gradle build report
