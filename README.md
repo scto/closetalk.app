@@ -13,7 +13,7 @@
 [![Android Studio](https://img.shields.io/badge/Android%20Studio%20Meerkat-2024.3.1-orange.svg?style=flat-square)](https://developer.android.com/studio/preview)
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/mobiledevpro/closetalk.app?color=red&style=flat-square)
-##
+
 ### Try demo:
 [<img src="https://github.com/mobiledevpro/closetalk.app/assets/5750211/56e09ffa-faa5-4ad1-8ad8-4ee35957870b" width="250" alt="Demo"/>](https://play.google.com/store/apps/details?id=com.mobiledevpro.closetalk.app&utm_source=landing)
 
@@ -22,13 +22,13 @@
 
 [![Youtube](https://img.shields.io/badge/-youtube-red?logo=youtube&message=Youtube&style=for-the-badge&label=Watch+on)](https://www.youtube.com/playlist?list=PL9IBbMupfHWrW419OtGlzc7cBEMNqyLa4)
 
-##
-### Apps built from this template: 
+
+## Apps built from this template: 
 - [Screenshot Maker - NeonFrame](https://play.google.com/store/apps/details?id=com.mobiledevpro.neonframe.app) - Make eye-catching screenshots you share on Twitter, Instagram, and others.
 - [Habit Tracker](https://www.instagram.com/stories/highlights/18330975238092077/) - Coming...
 
-##
-### Tech. stack
+
+## Tech. stack
 
 * [Kotlin](https://kotlinlang.org/docs/getting-started.html)
 * [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)
@@ -40,7 +40,23 @@
 * MVI + modularization with a clean architecture
 * GitHub Actions [Complete Guide](https://www.patreon.com/mobiledevpro/shop/power-of-github-actions-complete-guide-943321)
 
-### Notes
+
+## Speed up Gradle build time
+
+Article 1 - [How to speed up Gradle build time](https://medium.com/@nikachapidze01/speed-up-android-builds-60714fc38178)
+
+Doc - [Optimize your buid speed](https://developer.android.com/build/optimize-your-build)
+
+Article 2 - [How I Cut My Gradle Build Time by 50%](https://levelup.gitconnected.com/how-i-cut-my-gradle-build-time-by-50-8f3c57534ce6)
+
+#### Get Gradle build report
+
+```bash
+./gradlew --profile
+```
+
+
+## Notes
 
 #### Plugin to generate Compose Compiler metrics (root/build.gradle.kts)
 [Interpreting Compose Compiler Metrics](https://github.com/JetBrains/kotlin/blob/master/plugins/compose/design/compiler-metrics.md)
@@ -69,19 +85,7 @@ adb shell setprop log.tag.FA-SVC VERBOSE
 adb logcat -v time -s FA FA-SVC
 ```
 
-#### Speed up Gradle build time
 
-Article - [How to speed up Gradle build time](https://medium.com/@nikachapidze01/speed-up-android-builds-60714fc38178)
-
-Doc - [Optimize your buid speed](https://developer.android.com/build/optimize-your-build)
-
-#### Get Gradle build report
-
-```bash
-./gradlew --profile
-```
-
-##
 ## UI testing with [Maestro](https://maestro.mobile.dev/):
 
 * Install Maestro: run in terminal ```curl -Ls "https://get.maestro.mobile.dev" | bash```
@@ -89,7 +93,7 @@ Doc - [Optimize your buid speed](https://developer.android.com/build/optimize-yo
 * Run the flow: run in terminal ```maestro test -c maestro/people-profile-flow.yaml```
 * [Sample config](maestro/people-profile-flow.yaml)
 
-##
+
 ## Module Graph
 
 ```mermaid
