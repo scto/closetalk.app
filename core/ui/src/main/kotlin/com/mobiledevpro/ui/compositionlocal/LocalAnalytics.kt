@@ -17,7 +17,7 @@
  */
 package com.mobiledevpro.ui.compositionlocal
 
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import com.mobiledevpro.analytics.Analytics
 
 /**
@@ -26,6 +26,6 @@ import com.mobiledevpro.analytics.Analytics
  *
  */
 // Custom composition local to use in Compose screens
-val LocalAnalytics = compositionLocalOf<Analytics> {
+val LocalAnalytics = staticCompositionLocalOf<Analytics> {
     error("No analytics provided!")
 }
