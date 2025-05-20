@@ -25,10 +25,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 
-class GetPeopleProfileUseCase : BaseCoroutinesFLowUseCase<Int, PeopleProfile?>(Dispatchers.IO) {
+class GetPeopleProfileUseCase : BaseCoroutinesFLowUseCase<Int, PeopleProfile>(Dispatchers.IO) {
 
-    override suspend fun buildUseCaseFlow(params: Int?): Flow<PeopleProfile?> =
+    override fun buildUseCaseFlow(params: Int?): Flow<PeopleProfile> =
         params?.let { peopleProfileId ->
-            flowOf(fakePeopleProfileList.find { it.id == peopleProfileId })
+            flowOf(fakePeopleProfileList.find { it.id == peopleProfileId }
+                ?: throw Throwable("People profile not found"))
         } ?: throw Throwable("People profile cannot be null")
 }

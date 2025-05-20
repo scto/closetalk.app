@@ -24,6 +24,8 @@ import com.mobiledevpro.ui.state.UIState
 sealed interface MainUIState : UIState {
     data object Empty : MainUIState
 
+    data class Fail(val throwable: Throwable) : MainUIState
+
     data class Success(
         val settings: Settings
     ) : MainUIState

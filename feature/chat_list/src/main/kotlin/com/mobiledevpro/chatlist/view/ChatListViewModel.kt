@@ -17,43 +17,28 @@
  */
 package com.mobiledevpro.chatlist.view
 
-import android.util.Log
-import androidx.lifecycle.viewModelScope
 import com.mobiledevpro.chatlist.domain.usecase.GetChatListUseCase
 import com.mobiledevpro.ui.vm.BaseViewModel
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 
 class ChatListViewModel(
     private val getChatListUseCase: GetChatListUseCase
 ) : BaseViewModel<ChatListUIState>() {
 
-    override fun initUIState(): ChatListUIState = ChatListUIState.Empty
+    override val initialState: ChatListUIState
+        get() = ChatListUIState.Empty
 
-    init {
-        Log.d("UI", "ChatListViewModel init")
-        observeChatList()
-    }
+    override fun observeState(): Flow<ChatListUIState> =
+        getChatListUseCase.execute()
+            .map { result ->
 
-    private fun observeChatList() {
-        viewModelScope.launch {
-            getChatListUseCase.execute()
-                .collectLatest { result ->
-                    result.onSuccess { list ->
-                        _uiState.update {
-                            if (it is ChatListUIState.Success)
-                                it.copy(chatList = list)
-                            else
-                                ChatListUIState.Success(list)
-                        }
-                    }.onFailure { err ->
-                        _uiState.update {
-                            ChatListUIState.Fail(err)
-                        }
-                    }
+                try {
+                    ChatListUIState.Success(result.getOrThrow())
+                } catch (t: Throwable) {
+                    ChatListUIState.Fail(Throwable("Handled exception : ${t.message}"))
                 }
-        }
-    }
+
+            }
 }

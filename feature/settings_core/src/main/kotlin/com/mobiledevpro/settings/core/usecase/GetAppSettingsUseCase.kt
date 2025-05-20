@@ -35,7 +35,7 @@ class GetAppSettingsUseCase(
     private val settingsManager: AppSettingsManager
 ) : BaseCoroutinesFLowUseCase<None, Settings>(Dispatchers.IO) {
 
-    override suspend fun buildUseCaseFlow(params: None?): Flow<Settings> =
+    override fun buildUseCaseFlow(params: None?): Flow<Settings> =
         settingsManager.get()
             .map { appSettings ->
                 Settings(

@@ -17,16 +17,15 @@
  */
 package com.mobiledevpro.people.profile.view.vm
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.mobiledevpro.people.profile.domain.usecase.GetPeopleProfileUseCase
 import com.mobiledevpro.people.profile.view.args.PeopleProfileArgs
 import com.mobiledevpro.people.profile.view.state.PeopleProfileUIState
 import com.mobiledevpro.ui.vm.BaseViewModel
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 /**
  * Profile screen for selected person from People list
@@ -39,40 +38,23 @@ class PeopleProfileViewModel(
     private val getPeopleProfileUseCase: GetPeopleProfileUseCase
 ) : BaseViewModel<PeopleProfileUIState>() {
 
-    override fun initUIState(): PeopleProfileUIState = PeopleProfileUIState.Empty
+    override val initialState: PeopleProfileUIState
+        get() = PeopleProfileUIState.Empty
+
+    override val scope: CoroutineScope
+        get() = viewModelScope
 
     private val profileId : Int =  PeopleProfileArgs(savedStateHandle).peopleProfileId
 
+    override fun observeState(): Flow<PeopleProfileUIState> =
+        getPeopleProfileUseCase.execute(profileId)
+            .map { result ->
 
-    init {
-        Log.d("navigation", "PeopleProfileViewModel: args = $profileId")
-
-        PeopleProfileArgs(savedStateHandle)
-            .peopleProfileId
-            .also(::observePeopleProfile)
-    }
-
-    private fun observePeopleProfile(profileId: Int) {
-        viewModelScope.launch {
-            getPeopleProfileUseCase.execute(profileId)
-                .collectLatest { result ->
-                    result.onSuccess { profile ->
-                        Log.d("navigation", "observePeopleProfile: ${profile?.id ?: -1}")
-                        profile?.let {
-                            _uiState.update {
-                                if (it is PeopleProfileUIState.Success)
-                                    it.copy(profile = profile)
-                                else
-                                    PeopleProfileUIState.Success(profile)
-                            }
-                        }
-                    }.onFailure { err ->
-                        _uiState.update {
-                            PeopleProfileUIState.Fail(err)
-                        }
-                    }
-
+                try {
+                    PeopleProfileUIState.Success(result.getOrThrow())
+                } catch (t: Throwable) {
+                    PeopleProfileUIState.Fail(t)
                 }
-        }
-    }
+
+            }
 }

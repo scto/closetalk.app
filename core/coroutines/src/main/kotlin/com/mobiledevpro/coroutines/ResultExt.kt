@@ -58,11 +58,13 @@ inline fun <T, R> T.resultOf(block: T.() -> R): Result<R> {
     return try {
         Result.success(block())
     } catch (t: TimeoutCancellationException) {
-        Result.failure(t)
+        Result.failure(Throwable(t.localizedMessage))
     } catch (c: CancellationException) {
-        throw c
+        Result.failure(Throwable(c.localizedMessage))
     } catch (e: Exception) {
-        Result.failure(e)
+        Result.failure(Throwable(e.localizedMessage))
+    } catch (t: Throwable) {
+        Result.failure(t)
     }
 }
 

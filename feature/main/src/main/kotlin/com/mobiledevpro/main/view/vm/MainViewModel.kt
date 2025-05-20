@@ -17,32 +17,28 @@
  */
 package com.mobiledevpro.main.view.vm
 
-import androidx.lifecycle.viewModelScope
 import com.mobiledevpro.main.view.state.MainUIState
 import com.mobiledevpro.settings.core.usecase.GetAppSettingsUseCase
 import com.mobiledevpro.ui.vm.BaseViewModel
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 
 class MainViewModel(
     private val getAppSettingsUseCase: GetAppSettingsUseCase
 ) : BaseViewModel<MainUIState>() {
 
-    override fun initUIState(): MainUIState = MainUIState.Empty
+    override val initialState: MainUIState
+        get() = MainUIState.Empty
 
-    init {
-        observeSettings()
-    }
-
-    private fun observeSettings() {
-        viewModelScope.launch {
-            getAppSettingsUseCase.execute()
-                .collectLatest { result ->
-                    result.onSuccess { settings ->
-                        _uiState.value = MainUIState.Success(settings)
-                    }
+    override fun observeState(): Flow<MainUIState> =
+        getAppSettingsUseCase.execute()
+            .map { result ->
+                try {
+                    MainUIState.Success(result.getOrThrow())
+                } catch (t: Throwable) {
+                    MainUIState.Fail(t)
                 }
-        }
-    }
+            }
+
 }

@@ -40,6 +40,9 @@ abstract class BaseCoroutinesUseCase<in Params, Results>(
                 if (dispatcher == Dispatchers.Main)
                     throw RuntimeException("Use case '${this::class.simpleName}' cannot be executed in $dispatcher")
 
+                if (Thread.currentThread().name.contains("main"))
+                    throw RuntimeException("Use case '${this::class.simpleName}' cannot be executes in the ${Thread.currentThread().name} thread")
+
                 resultOf {
                     this@BaseCoroutinesUseCase.buildUseCase(params)
                 }

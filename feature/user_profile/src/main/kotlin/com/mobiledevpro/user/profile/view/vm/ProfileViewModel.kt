@@ -17,16 +17,16 @@
  */
 package com.mobiledevpro.user.profile.view.vm
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.mobiledevpro.domain.model.UserProfile
 import com.mobiledevpro.settings.core.model.Settings
 import com.mobiledevpro.settings.core.usecase.GetAppSettingsUseCase
 import com.mobiledevpro.settings.core.usecase.UpdateAppSettingsUseCase
 import com.mobiledevpro.ui.vm.BaseViewModel
 import com.mobiledevpro.user.profile.domain.usecase.GetUserProfileUseCase
 import com.mobiledevpro.user.profile.view.state.UserProfileUIState
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
@@ -35,13 +35,28 @@ class ProfileViewModel(
     private val updateAppSettingsUseCase: UpdateAppSettingsUseCase
 ) : BaseViewModel<UserProfileUIState>() {
 
-    override fun initUIState(): UserProfileUIState = UserProfileUIState.Empty
+    override val initialState: UserProfileUIState
+        get() = UserProfileUIState.Empty
 
-    init {
-        Log.d("UI", "ProfileViewModel init")
-        observeUserProfile()
-        observeAppSettings()
-    }
+    override fun observeState(): Flow<UserProfileUIState> =
+        combine(
+            getUserProfileUseCase.execute(),
+            getAppSettingsUseCase.execute(),
+            //getAppSettingsUseCase.execute(),
+            { userProfileResult: Result<UserProfile>, appSettingsResult: Result<Settings> ->
+
+                try {
+                    UserProfileUIState.Success(
+                        userProfile = userProfileResult.getOrThrow(),
+                        settings = appSettingsResult.getOrThrow()
+                    )
+
+                } catch (t: Throwable) {
+                    UserProfileUIState.Fail(t)
+                }
+            }
+        )
+
 
     fun onDarkModeSwitched(isDarkMode: Boolean) {
         viewModelScope.launch {
@@ -57,41 +72,4 @@ class ProfileViewModel(
         }
     }
 
-    private fun observeUserProfile() {
-        viewModelScope.launch {
-            getUserProfileUseCase.execute()
-                .collectLatest { result ->
-                    result.onSuccess { profile ->
-                        _uiState.update {
-                            if (it is UserProfileUIState.Success)
-                                it.copy(userProfile = profile)
-                            else
-                                UserProfileUIState.Success(profile)
-                        }
-                    }.onFailure { err ->
-                        _uiState.update {
-                            UserProfileUIState.Fail(err)
-                        }
-                    }
-
-                }
-        }
-    }
-
-    private fun observeAppSettings() {
-        viewModelScope.launch {
-            getAppSettingsUseCase.execute()
-                .collectLatest { result ->
-                    result.onSuccess { settings ->
-                        Log.d("settings", "observeAppSettings: dark mode = ${settings.darkMode}")
-                        _uiState.update {
-                            if (it is UserProfileUIState.Success)
-                                it.copy(settings = settings)
-                            else
-                                UserProfileUIState.Success(settings = settings)
-                        }
-                    }
-                }
-        }
-    }
 }

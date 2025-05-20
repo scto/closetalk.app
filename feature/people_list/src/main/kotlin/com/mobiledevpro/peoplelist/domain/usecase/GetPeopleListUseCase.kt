@@ -17,23 +17,20 @@
  */
 package com.mobiledevpro.peoplelist.domain.usecase
 
-import android.util.Log
 import com.mobiledevpro.coroutines.BaseCoroutinesFLowUseCase
 import com.mobiledevpro.coroutines.None
 import com.mobiledevpro.domain.model.PeopleProfile
 import com.mobiledevpro.domain.model.fakePeopleProfileList
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 
 class GetPeopleListUseCase : BaseCoroutinesFLowUseCase<None, List<PeopleProfile>>(Dispatchers.IO) {
 
-    override suspend fun buildUseCaseFlow(params: None?): Flow<List<PeopleProfile>> {
-        Log.d("testing", "buildUseCaseFlow: Thread - ${Thread.currentThread().name}")
-        delay(1000)
-
+    @OptIn(FlowPreview::class)
+    override fun buildUseCaseFlow(params: None?): Flow<List<PeopleProfile>> {
         return flowOf(fakePeopleProfileList)
     }
 }

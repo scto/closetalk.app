@@ -21,40 +21,29 @@ import androidx.lifecycle.viewModelScope
 import com.mobiledevpro.peoplelist.domain.usecase.GetPeopleListUseCase
 import com.mobiledevpro.peoplelist.view.state.PeopleProfileUIState
 import com.mobiledevpro.ui.vm.BaseViewModel
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 
 class PeopleListViewModel(
     private val getPeopleListUseCase: GetPeopleListUseCase
 ) : BaseViewModel<PeopleProfileUIState>() {
 
-    override fun initUIState(): PeopleProfileUIState = PeopleProfileUIState.Loading
+    override val initialState: PeopleProfileUIState
+        get() = PeopleProfileUIState.Loading
 
+    override val scope: CoroutineScope
+        get() = viewModelScope
 
-    init {
-        observePeopleList()
-    }
+    override fun observeState(): Flow<PeopleProfileUIState> =
+        getPeopleListUseCase.execute()
+            .map { result ->
 
-    private fun observePeopleList() {
-        viewModelScope.launch {
-            getPeopleListUseCase.execute()
-                .collectLatest { result ->
-                    result.onSuccess { list ->
-                        _uiState.update {
-                            if (it is PeopleProfileUIState.Success)
-                                it.copy(list)
-                            else
-                                PeopleProfileUIState.Success(list)
-                        }
-                    }.onFailure { err ->
-                        _uiState.update {
-                            PeopleProfileUIState.Fail(err)
-                        }
-                    }
+                try {
+                    PeopleProfileUIState.Success(result.getOrThrow())
+                } catch (t: Throwable) {
+                    PeopleProfileUIState.Fail(t)
                 }
-        }
-    }
-
+            }
 }

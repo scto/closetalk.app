@@ -18,6 +18,7 @@
 package com.mobiledevpro.people.profile.view
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -43,6 +44,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -53,6 +55,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -83,6 +86,7 @@ fun SharedTransitionScope.PeopleProfileScreen(
     onOpenChatWith: (profile: PeopleProfile) -> Unit,
     onOpenSocialLink: (Uri) -> Unit
 ) {
+    val context = LocalContext.current
 
     val uiState by state.collectAsStateWithLifecycle()
     val backgroundBoxTopOffset = remember { mutableIntStateOf(0) }
@@ -93,6 +97,14 @@ fun SharedTransitionScope.PeopleProfileScreen(
         (uiState as PeopleProfileUIState.Success).also { st ->
             peopleProfile = st.profile
 
+        }
+    } else if (uiState is PeopleProfileUIState.Fail) {
+        LaunchedEffect(Unit) {
+            Toast.makeText(
+                context,
+                (uiState as PeopleProfileUIState.Fail).throwable.localizedMessage,
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
