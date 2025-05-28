@@ -21,6 +21,7 @@ import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -45,6 +46,10 @@ abstract class BaseCoroutinesFLowUseCase<in Params, Results>(
             this@BaseCoroutinesFLowUseCase.buildUseCaseFlow(params)
                 .map {
                     resultOf { it }
+                }
+                .catch {
+                    logException(it.localizedMessage ?: it.cause?.message ?: it.toString())
+                    emit(Result.failure(Throwable(it.localizedMessage)))
                 }
                 .flowOn(dispatcher)
 
