@@ -92,17 +92,11 @@ android {
     }
 
     compileOptions {
-        android.compileOptions.isCoreLibraryDesugaringEnabled = true
-
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlin {
-        compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_17
-            targetCompatibility = JavaVersion.VERSION_17
-        }
+        jvmToolchain(17)
     }
 
 
@@ -113,13 +107,6 @@ android {
 
     packaging {
         resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
-    }
-
-    // There are duplicated classes in firebase lib and in com.google.protobuf
-    configurations {
-        implementation {
-            exclude(group = "com.google.firebase", module = "protolite-well-known-types")
-        }
     }
 }
 
