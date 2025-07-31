@@ -120,6 +120,7 @@ dependencies {
 
     implementation(libs.firebase.performance)
     implementation(projects.core.analytics)
+    implementation(projects.core.database)
 
     testApi(libs.bundles.test.common)
 
@@ -135,6 +136,7 @@ dependencies {
     }
 
     implementation(projects.feature.main)
+    implementation(projects.feature.sync)
 }
 
 

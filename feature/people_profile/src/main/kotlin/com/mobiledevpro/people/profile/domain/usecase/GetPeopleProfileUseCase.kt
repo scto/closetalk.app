@@ -18,18 +18,22 @@
 package com.mobiledevpro.people.profile.domain.usecase
 
 import com.mobiledevpro.coroutines.BaseCoroutinesFLowUseCase
+import com.mobiledevpro.database.AppDatabase
+import com.mobiledevpro.database.entity.PeopleEntity
 import com.mobiledevpro.domain.model.PeopleProfile
-import com.mobiledevpro.domain.model.fakePeopleProfileList
+import com.mobiledevpro.people.core.mapping.toDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 
-class GetPeopleProfileUseCase : BaseCoroutinesFLowUseCase<Int, PeopleProfile>(Dispatchers.IO) {
+class GetPeopleProfileUseCase(
+    private val database: AppDatabase
+) : BaseCoroutinesFLowUseCase<String, PeopleProfile>(Dispatchers.IO) {
 
-    override fun buildUseCaseFlow(params: Int?): Flow<PeopleProfile> =
-        params?.let { peopleProfileId ->
-            flowOf(fakePeopleProfileList.find { it.id == peopleProfileId }
-                ?: throw Throwable("People profile not found"))
+    override fun buildUseCaseFlow(params: String?): Flow<PeopleProfile> =
+        params?.let { peopleProfileUuid ->
+            database.peopleDao().selectByUuid(peopleProfileUuid)
+                .map(PeopleEntity::toDomain)
         } ?: throw Throwable("People profile cannot be null")
 }
