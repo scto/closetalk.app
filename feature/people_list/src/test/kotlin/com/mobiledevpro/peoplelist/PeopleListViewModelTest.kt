@@ -18,6 +18,7 @@
 package com.mobiledevpro.peoplelist
 
 import app.cash.turbine.test
+import com.mobiledevpro.database.AppDatabase
 import com.mobiledevpro.peoplelist.domain.usecase.GetPeopleListUseCase
 import com.mobiledevpro.peoplelist.view.state.PeopleProfileUIState
 import com.mobiledevpro.peoplelist.view.vm.PeopleListViewModel
@@ -32,19 +33,38 @@ import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.dsl.module
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import org.robolectric.RuntimeEnvironment
 import kotlin.test.assertEquals
 
 
-class PeopleListViewModelTest {
+class PeopleListViewModelTest : KoinTest {
 
     private lateinit var vm: PeopleListViewModel
+    private val database: AppDatabase by inject()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
         Dispatchers.setMain(StandardTestDispatcher())
 
-        val useCase = GetPeopleListUseCase()
+        val context = RuntimeEnvironment.getApplication()
+        startKoin {
+            modules(
+                module {
+                    single {
+                        AppDatabase.buildDatabase(context)
+                    }
+                }
+            )
+        }
+
+
+        val useCase = GetPeopleListUseCase(database)
         vm = PeopleListViewModel(getPeopleListUseCase = useCase)
         assertTrue(
             "Initial state is incorrect: ${vm.uiState.value}",
@@ -65,5 +85,9 @@ class PeopleListViewModelTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @After
-    fun finish() = Dispatchers.resetMain()
+    fun finish() {
+        Dispatchers.resetMain()
+        database.close()
+        stopKoin()
+    }
 }
