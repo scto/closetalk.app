@@ -20,9 +20,9 @@ package com.mobiledevpro.di
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisallowComposableCalls
 import androidx.lifecycle.ViewModel
-import org.koin.androidx.compose.navigation.koinNavViewModel
 import org.koin.compose.module.rememberKoinModules
 import org.koin.compose.scope.rememberKoinScope
+import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.module.Module
 import org.koin.core.qualifier.TypeQualifier
@@ -45,7 +45,8 @@ inline fun <reified T : ViewModel> rememberNavViewModel(
     crossinline modules: @DisallowComposableCalls () -> List<Module>
 ): T {
     rememberKoinModules(
-        modules = modules
+        modules = modules,
+        unloadModules = true // if false , there is a warning in logs "(+) override index ... "
     )
 
     val scope = rememberKoinScope(scope = koinScope<T>())
@@ -53,5 +54,5 @@ inline fun <reified T : ViewModel> rememberNavViewModel(
     // return remember { scope.get() }
 
     // It allows to use SavedStateHandle in ViewModel
-    return koinNavViewModel<T>(scope = scope)
+    return koinViewModel<T>(scope = scope)
 }
