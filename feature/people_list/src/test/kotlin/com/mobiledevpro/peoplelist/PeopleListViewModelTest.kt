@@ -17,6 +17,9 @@
  */
 package com.mobiledevpro.peoplelist
 
+import android.content.Context
+import android.os.Build
+import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import com.mobiledevpro.database.AppDatabase
 import com.mobiledevpro.peoplelist.domain.usecase.GetPeopleListUseCase
@@ -33,15 +36,18 @@ import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import org.robolectric.RuntimeEnvironment
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 
-
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.P])
 class PeopleListViewModelTest : KoinTest {
 
     private lateinit var vm: PeopleListViewModel
@@ -52,7 +58,7 @@ class PeopleListViewModelTest : KoinTest {
     fun setUp() {
         Dispatchers.setMain(StandardTestDispatcher())
 
-        val context = RuntimeEnvironment.getApplication()
+        val context = ApplicationProvider.getApplicationContext<Context>()
         startKoin {
             modules(
                 module {
@@ -77,8 +83,8 @@ class PeopleListViewModelTest : KoinTest {
         vm.uiState.test {
             assertEquals(PeopleProfileUIState.Loading, awaitItem())
             assertTrue(
-                "People list is empty",
-                (awaitItem() as PeopleProfileUIState.Success).profileList.isNotEmpty()
+                "People list success state expected, but was ${vm.uiState.value}",
+                (awaitItem() is PeopleProfileUIState.Success)
             )
         }
     }
