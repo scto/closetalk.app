@@ -6,9 +6,6 @@ sdk-min = "29"
 sdk-target = "36"
 sdk-compile = "36"
 
-app-database-version = "1"
-app-database-name = "closetalk.db"
-
 # Plugins
 android-gradle = "8.13.0"
 kotlin = "2.2.20"

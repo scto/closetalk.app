@@ -35,7 +35,7 @@ import com.mobiledevpro.database.entity.PeopleSocialEntity
         PeopleEntity::class,
         PeopleSocialEntity::class
     ],
-    version = BuildConfig.DB_VERSION
+    version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -46,7 +46,7 @@ abstract class AppDatabase : RoomDatabase() {
             Room.databaseBuilder(
                 appContext,
                 AppDatabase::class.java,
-                BuildConfig.DB_NAME
+                "closetalk.db"
             )
                 .fallbackToDestructiveMigration(true)
                 .build()
