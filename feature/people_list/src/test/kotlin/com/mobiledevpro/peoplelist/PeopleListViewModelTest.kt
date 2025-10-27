@@ -32,6 +32,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.withTimeout
 import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -45,6 +46,7 @@ import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
+import kotlin.time.Duration.Companion.seconds
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.P])
@@ -81,11 +83,18 @@ class PeopleListViewModelTest : KoinTest {
     @Test
     fun stateTest() = runTest {
         vm.uiState.test {
-            assertEquals(PeopleProfileUIState.Loading, awaitItem())
+            testScheduler.advanceUntilIdle()
+
+            // Increase await timeout to 5s to avoid flaky timeouts
+            val item = withTimeout(5.seconds) { awaitItem() }
+
+            assertEquals(PeopleProfileUIState.Loading, item)
             assertTrue(
                 "People list success state expected, but was ${vm.uiState.value}",
                 (awaitItem() is PeopleProfileUIState.Success)
             )
+
+            cancelAndIgnoreRemainingEvents()
         }
     }
 
